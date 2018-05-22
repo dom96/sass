@@ -28,7 +28,7 @@ import sass
 compileFile("style.scss")
 
 # Compile a Sass/SCSS file with options:
-compileFile("style.sass", outputPath="style.css", includePaths: @["includes"])
+compileFile("style.sass", outputPath="style.css", includePaths = @["includes"])
 
 # Compile a Sass/SCSS string:
 let css = compile("body { div { color: red; } }")
