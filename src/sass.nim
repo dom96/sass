@@ -23,6 +23,8 @@ export OutputStyle
 type
   SassException* = object of Exception
 
+proc strdup(str: cstring): cstring {.importc.}
+
 proc setOptions*(ctx: ptr Context | ptr DataContext | ptr FileContext,
                  precision: cint, outputStyle: OutputStyle,
                  includePaths: seq[string], outputPath: string) =
@@ -30,7 +32,7 @@ proc setOptions*(ctx: ptr Context | ptr DataContext | ptr FileContext,
   opts.setPrecision(precision)
   opts.setOutputStyle(outputStyle)
   for p in includePaths:
-    let allocatedData = copy_c_string(p)
+    let allocatedData = strdup(p)
     opts.pushIncludePath(allocatedData)
   if outputPath.len > 0:
     opts.setOutputPath(outputPath)
@@ -39,7 +41,7 @@ proc compile*(data: string, precision: int = 5,
               outputStyle: OutputStyle = Nested,
               includePaths: seq[string] = @[]): string =
   ## Compiles a Sass/SCSS string to CSS.
-  let allocatedData = copy_c_string(data)
+  let allocatedData = strdup(data)
   let dataCtx = makeDataContext(allocatedData)
   defer:
     dataCtx.delete()
@@ -55,7 +57,7 @@ proc compile*(data: string, precision: int = 5,
 proc compileFile*(filename: string, outputPath = "",
                   precision: int = 5, outputStyle: OutputStyle = Nested,
                   includePaths: seq[string] = @[]) =
-  let allocatedFilename = copy_c_string(filename)
+  let allocatedFilename = strdup(filename)
   let fileCtx = makeFileContext(allocatedFilename)
   defer:
     fileCtx.delete()
