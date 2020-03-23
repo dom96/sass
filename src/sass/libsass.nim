@@ -1,6 +1,6 @@
 when defined(macosx):
   const libsass = "libsass.dylib"
-elif defined(linux):
+elif defined(linux) or defined(bsd):
   const libsass = "libsass.so"
 else:
   const libsass = "libsass.dll"
