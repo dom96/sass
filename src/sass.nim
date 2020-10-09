@@ -23,7 +23,7 @@ export OutputStyle
 type
   SassException* = object of Exception
 
-proc strdup(str: cstring): cstring {.importc.}
+proc strdup(str: cstring): cstring {.header: "<string.h>", importc.}
 
 proc setOptions*(ctx: ptr Context | ptr DataContext | ptr FileContext,
                  precision: cint, outputStyle: OutputStyle,
