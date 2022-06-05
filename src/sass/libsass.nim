@@ -1,11 +1,11 @@
 when defined(macosx):
   const libsass = "libsass.dylib"
-elif defined(linux) or defined(bsd):
-  const libsass = "libsass.so"
+elif defined(windows):
+  const libsass = "libsass.dll"
 elif defined(haiku):
   const libsass = "libsass.so.1.0.0"
 else:
-  const libsass = "libsass.dll"
+  const libsass = "libsass.so"
 
 #[ base.h ]#
 
